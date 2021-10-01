@@ -134,8 +134,12 @@
 
 		<label>Switchbot Meter</label>
 		<description>Switchbot Meter</description>
+		<category>Sensor</category>
 
-		<!-- <channels> <channel id="command" typeId="command"/> </channels> -->
+		<channels>
+			<channel id="temperature" typeId="temperature"/>
+			<channel id="humidity" typeId="system.atmospheric-humidity"/>
+		</channels>
 
 		<config-description>
 			<parameter name="deviceId" type="text" required="true">
@@ -145,7 +149,7 @@
 			<parameter name="refreshInterval" type="integer" unit="s" min="30">
 				<label>Refresh Interval</label>
 				<description>Interval the device is polled in sec (API allows 10000 calls per day per account).</description>
-				<default>60</default>
+				<default>120</default>
 			</parameter>
 		</config-description>
 	</thing-type>
@@ -418,6 +422,13 @@
 				<option value="turnOn">turnOn</option>
 			</options>
 		</state>
+	</channel-type>
+
+	<channel-type id="temperature">
+		<item-type>Number:Temperature</item-type>
+		<label>Temperature</label>
+		<description>Current temperature</description>
+		<state readOnly="true" pattern="%.1f %unit%"/>
 	</channel-type>
 
 

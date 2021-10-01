@@ -12,9 +12,14 @@
  */
 package org.openhab.binding.switchbot.internal.handler;
 
+import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_HUMIDITY;
+import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_TEMPERATURE;
+
 import org.openhab.binding.switchbot.internal.config.MeterConfig;
+import org.openhab.core.library.types.DecimalType;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
+import org.openhab.core.thing.ThingStatusDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +44,7 @@ public class MeterHandler extends SwitchbotHandler {
 
         MeterConfig config = getThing().getConfiguration().as(MeterConfig.class);
 
-        logger.debug("Curtain Config: {}", config);
+        logger.debug("Meter Config: {}", config);
 
         refreshTime = config.getRefreshInterval();
         if (refreshTime < 1) {
@@ -54,7 +59,31 @@ public class MeterHandler extends SwitchbotHandler {
     }
 
     @Override
-    protected void updateState(SwitchbotApiStatusModel status) {
-        // TODO Auto-generated method stub
+    protected void updateState(SwitchbotApiStatusModel state) {
+        if (state != null) {
+            updateStatus(ThingStatus.ONLINE);
+            publishChannels(state);
+        } else {
+            logger.warn("Meter {} not cloud-enabled, check app settings", apiProxy.getDeviceId());
+            updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.CONFIGURATION_ERROR,
+                    "Meter not cloud-enabled, check app settings");
+        }
+    }
+
+    private void publishChannels(SwitchbotApiStatusModel state) {
+        // if (state == null) {
+        // updateState(CHANNEL_POWER, OnOffType.OFF);
+        // return;
+        // }
+
+        float temperature = state.getBody().getTemperature();
+        int humidity = state.getBody().getHumidity();
+
+        updateState(CHANNEL_TEMPERATURE, new DecimalType(temperature));
+        updateState(CHANNEL_HUMIDITY, new DecimalType(humidity));
+
+        // boolean power = state.getBody().getPower() == null ? false :
+        // state.getBody().getPower().equalsIgnoreCase("on");
+        // updateState(CHANNEL_POWER, power ? OnOffType.ON : OnOffType.OFF);
     }
 }
