@@ -22,6 +22,7 @@ import org.openhab.binding.switchbot.internal.config.SwitchbotAccountConfig;
 import org.openhab.binding.switchbot.internal.discovery.AllDevicesModel;
 import org.openhab.binding.switchbot.internal.discovery.CurtainDevice;
 import org.openhab.binding.switchbot.internal.discovery.HubDevice;
+import org.openhab.binding.switchbot.internal.discovery.MeterDevice;
 import org.openhab.binding.switchbot.internal.discovery.SwitchbotDevice;
 import org.openhab.core.io.net.http.HttpUtil;
 import org.openhab.core.thing.Bridge;
@@ -114,6 +115,8 @@ public class SwitchbotAccountHandler extends BaseBridgeHandler {
                 case "Bot":
                 case "Plug":
                 case "Meter":
+                    devices.add(new MeterDevice(device.getDeviceName(), device.getDeviceId()));
+                    break;
                 case "Humidifier":
                 case "Smart Fan":
                     logger.warn(
@@ -143,7 +146,7 @@ public class SwitchbotAccountHandler extends BaseBridgeHandler {
 
     @Override
     public void childHandlerInitialized(ThingHandler childHandler, Thing childThing) {
-        ((CurtainHandler) childHandler)
+        ((SwitchbotHandler) childHandler)
                 .setAuthorizationOpenToken(getConfigAs(SwitchbotAccountConfig.class).getAuthorizationOpenToken());
     }
 }
