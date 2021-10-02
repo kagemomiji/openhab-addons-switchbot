@@ -17,6 +17,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.openhab.binding.switchbot.internal.config.SwitchbotAccountConfig;
 import org.openhab.core.thing.ChannelUID;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
@@ -51,8 +52,15 @@ abstract class SwitchbotHandler extends BaseThingHandler {
         super(thing);
     }
 
+    public String getAuthorizationOpenToken() {
+        return this.authorizationOpenToken;
+    }
+
+    abstract protected String getDeviceId();
+
     public void setAuthorizationOpenToken(String authorizationOpenToken) {
         this.authorizationOpenToken = authorizationOpenToken;
+        this.apiProxy = new SwitchbotApiProxy(getDeviceId(), this.authorizationOpenToken);
     }
 
     @Override
@@ -94,8 +102,18 @@ abstract class SwitchbotHandler extends BaseThingHandler {
             } catch (IOException e) {
                 logger.debug("Error when refreshing state, putting device offline.", e);
                 updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, e.getMessage());
+            } catch (NullPointerException e) {
+                logger.debug("Error when refreshing state, putting device offline.", e);
+                refreshAuthorizationOpenToken();
+                updateStatus(ThingStatus.OFFLINE, ThingStatusDetail.COMMUNICATION_ERROR, e.getMessage());
             }
         }
+    }
+
+    protected void refreshAuthorizationOpenToken() {
+        SwitchbotAccountHandler switchbotAccountHandler = (SwitchbotAccountHandler) getBridge().getHandler();
+        setAuthorizationOpenToken(switchbotAccountHandler.getThing().getConfiguration().as(SwitchbotAccountConfig.class)
+                .getAuthorizationOpenToken());
     }
 
     protected void startAutomaticRefresh() {

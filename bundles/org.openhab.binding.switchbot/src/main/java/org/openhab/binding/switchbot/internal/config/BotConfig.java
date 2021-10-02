@@ -1,16 +1,7 @@
 package org.openhab.binding.switchbot.internal.config;
 
-public class BotConfig {
+public class BotConfig extends SwitchbotDeviceConfig {
     private int refreshInterval;
-    private String deviceId;
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
 
     public int getRefreshInterval() {
         return refreshInterval;

@@ -1,19 +1,10 @@
 package org.openhab.binding.switchbot.internal.config;
 
-public class MeterConfig {
-    private String deviceId;
+public class MeterConfig extends SwitchbotDeviceConfig {
     private int refreshInterval;
 
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
     public int getRefreshInterval() {
-        return refreshInterval;
+        return this.refreshInterval;
     }
 
     public void setRefreshInterval(int refreshInterval) {
@@ -22,6 +13,6 @@ public class MeterConfig {
 
     @Override
     public String toString() {
-        return "MeterConfig [deviceId=" + deviceId + ", refreshInterval=" + refreshInterval + "]";
+        return "MeterConfig [deviceId=" + this.deviceId + ", refreshInterval=" + refreshInterval + "]";
     }
 }

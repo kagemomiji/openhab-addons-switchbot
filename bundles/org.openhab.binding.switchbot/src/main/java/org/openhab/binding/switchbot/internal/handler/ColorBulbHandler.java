@@ -12,7 +12,9 @@
  */
 package org.openhab.binding.switchbot.internal.handler;
 
+import org.openhab.binding.switchbot.internal.config.ColorBulbConfig;
 import org.openhab.binding.switchbot.internal.config.MeterConfig;
+import org.openhab.binding.switchbot.internal.config.SwitchbotDeviceConfig;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
 import org.slf4j.Logger;
@@ -56,5 +58,11 @@ public class ColorBulbHandler extends SwitchbotHandler {
     @Override
     protected void updateState(SwitchbotApiStatusModel status) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    protected String getDeviceId() {
+        SwitchbotDeviceConfig config = getConfigAs(ColorBulbConfig.class);
+        return config.getDeviceId();
     }
 }

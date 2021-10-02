@@ -1,16 +1,7 @@
 package org.openhab.binding.switchbot.internal.config;
 
-public class SmartfanConfig {
-    private String deviceId;
+public class SmartfanConfig extends SwitchbotDeviceConfig {
     private int refreshInterval;
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
 
     public int getRefreshInterval() {
         return refreshInterval;

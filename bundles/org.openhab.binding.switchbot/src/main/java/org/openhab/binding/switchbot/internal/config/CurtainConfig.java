@@ -1,8 +1,7 @@
 package org.openhab.binding.switchbot.internal.config;
 
-public class CurtainConfig {
+public class CurtainConfig extends SwitchbotDeviceConfig {
     private int refreshInterval;
-    private String deviceId;
     boolean group;
 
     public boolean isGroup() {

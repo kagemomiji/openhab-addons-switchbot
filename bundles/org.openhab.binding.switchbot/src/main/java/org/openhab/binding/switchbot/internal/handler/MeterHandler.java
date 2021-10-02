@@ -16,6 +16,7 @@ import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.C
 import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_TEMPERATURE;
 
 import org.openhab.binding.switchbot.internal.config.MeterConfig;
+import org.openhab.binding.switchbot.internal.config.SwitchbotDeviceConfig;
 import org.openhab.core.library.types.DecimalType;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
@@ -42,7 +43,7 @@ public class MeterHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Meter binding");
 
-        MeterConfig config = getThing().getConfiguration().as(MeterConfig.class);
+        MeterConfig config = getConfigAs(MeterConfig.class);
 
         logger.debug("Meter Config: {}", config);
 
@@ -53,6 +54,10 @@ public class MeterHandler extends SwitchbotHandler {
                     refreshTime);
             config.setRefreshInterval(1);
         }
+        // SwitchbotAccountHandler switchbotAccountHandler = (SwitchbotAccountHandler) this.getBridge().getHandler();
+        // String authorizationToken = switchbotAccountHandler.getThing().getConfiguration()
+        // .as(SwitchbotAccountConfig.class).getAuthorizationOpenToken();
+        // setAuthorizationOpenToken(authorizationToken);
 
         apiProxy = new SwitchbotApiProxy(config.getDeviceId(), authorizationOpenToken);
         startAutomaticRefresh();
@@ -85,5 +90,11 @@ public class MeterHandler extends SwitchbotHandler {
         // boolean power = state.getBody().getPower() == null ? false :
         // state.getBody().getPower().equalsIgnoreCase("on");
         // updateState(CHANNEL_POWER, power ? OnOffType.ON : OnOffType.OFF);
+    }
+
+    @Override
+    protected String getDeviceId() {
+        SwitchbotDeviceConfig config = getConfigAs(MeterConfig.class);
+        return config.getDeviceId();
     }
 }

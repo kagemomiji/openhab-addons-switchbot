@@ -13,6 +13,7 @@
 package org.openhab.binding.switchbot.internal.handler;
 
 import org.openhab.binding.switchbot.internal.config.HumidifierConfig;
+import org.openhab.binding.switchbot.internal.config.SwitchbotDeviceConfig;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
 import org.slf4j.Logger;
@@ -55,5 +56,11 @@ public class HumidifierHandler extends SwitchbotHandler {
 
     @Override
     protected void updateState(SwitchbotApiStatusModel status) {
+    }
+
+    @Override
+    protected String getDeviceId() {
+        SwitchbotDeviceConfig config = getConfigAs(HumidifierConfig.class);
+        return config.getDeviceId();
     }
 }

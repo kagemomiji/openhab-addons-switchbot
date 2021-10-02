@@ -12,7 +12,7 @@
  */
 package org.openhab.binding.switchbot.internal.handler;
 
-import org.openhab.binding.switchbot.internal.config.MeterConfig;
+import org.openhab.binding.switchbot.internal.config.ContactSensorConfig;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
 import org.slf4j.Logger;
@@ -37,7 +37,7 @@ public class ContactSensorHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Contact Sensor binding");
 
-        MeterConfig config = getThing().getConfiguration().as(MeterConfig.class);
+        ContactSensorConfig config = getThing().getConfiguration().as(ContactSensorConfig.class);
 
         logger.debug("Curtain Config: {}", config);
 
@@ -56,5 +56,11 @@ public class ContactSensorHandler extends SwitchbotHandler {
     @Override
     protected void updateState(SwitchbotApiStatusModel status) {
         // TODO Auto-generated method stub
+    }
+
+    @Override
+    protected String getDeviceId() {
+        ContactSensorConfig config = getThing().getConfiguration().as(ContactSensorConfig.class);
+        return config.getDeviceId();
     }
 }

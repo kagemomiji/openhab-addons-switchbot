@@ -1,16 +1,7 @@
 package org.openhab.binding.switchbot.internal.config;
 
-public class ColorBulbConfig {
-    private String deviceId;
+public class ColorBulbConfig extends SwitchbotDeviceConfig {
     private int refreshInterval;
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
 
     public int getRefreshInterval() {
         return refreshInterval;
@@ -22,6 +13,6 @@ public class ColorBulbConfig {
 
     @Override
     public String toString() {
-        return "HumidifierConfig [deviceId=" + deviceId + ", refreshInterval=" + refreshInterval + "]";
+        return "HumidifierConfig [deviceId=" + this.deviceId + ", refreshInterval=" + refreshInterval + "]";
     }
 }
