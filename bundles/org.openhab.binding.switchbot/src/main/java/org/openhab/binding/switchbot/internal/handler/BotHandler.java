@@ -15,6 +15,7 @@ package org.openhab.binding.switchbot.internal.handler;
 import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_POWER;
 
 import org.openhab.binding.switchbot.internal.config.BotConfig;
+import org.openhab.binding.switchbot.internal.config.SwitchbotDeviceConfig;
 import org.openhab.core.library.types.OnOffType;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
@@ -41,7 +42,7 @@ public class BotHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Bot binding");
 
-        BotConfig config = getThing().getConfiguration().as(BotConfig.class);
+        BotConfig config = getConfigAs(BotConfig.class);
 
         logger.debug("Bot Config: {}", config);
 
@@ -77,5 +78,11 @@ public class BotHandler extends SwitchbotHandler {
 
         boolean power = state.getBody().getPower() == null ? false : state.getBody().getPower().equalsIgnoreCase("on");
         updateState(CHANNEL_POWER, power ? OnOffType.ON : OnOffType.OFF);
+    }
+
+    @Override
+    protected String getDeviceId() {
+        SwitchbotDeviceConfig config = getConfigAs(BotConfig.class);
+        return config.getDeviceId();
     }
 }

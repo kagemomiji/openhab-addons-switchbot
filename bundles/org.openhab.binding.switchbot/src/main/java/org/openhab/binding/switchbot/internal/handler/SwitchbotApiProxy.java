@@ -49,16 +49,21 @@ public class SwitchbotApiProxy {
         return;
     }
 
-    public SwitchbotApiStatusModel getDeviceStatus() throws IOException {
+    public SwitchbotApiStatusModel getDeviceStatus() throws IOException, NullPointerException {
         Properties headers = new Properties();
         headers.setProperty("Authorization", authorizationOpenToken);
 
-        String resultString = HttpUtil.executeUrl("GET",
-                "https://api.switch-bot.com/v1.0/devices/" + deviceId + "/status", headers, null, "application/json",
-                20000);
-        logger.debug("Result from WS call to get /v1.0/devices/{}/status: {}", deviceId, resultString);
+        if (authorizationOpenToken != null) {
+            headers.setProperty("Authorization", authorizationOpenToken);
+            String resultString = HttpUtil.executeUrl("GET",
+                    "https://api.switch-bot.com/v1.0/devices/" + deviceId + "/status", headers, null,
+                    "application/json", 20000);
+            logger.debug("Result from WS call to get /v1.0/devices/{}/status: {}", deviceId, resultString);
 
-        Gson gson = new Gson();
-        return gson.fromJson(resultString, SwitchbotApiStatusModel.class);
+            Gson gson = new Gson();
+            return gson.fromJson(resultString, SwitchbotApiStatusModel.class);
+        } else {
+            throw new NullPointerException("authorizationOpenToken is null");
+        }
     }
 }

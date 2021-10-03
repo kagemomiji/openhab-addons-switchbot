@@ -12,9 +12,13 @@
  */
 package org.openhab.binding.switchbot.internal.handler;
 
-import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.*;
+import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_CALIBRATE;
+import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_GROUP;
+import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_MOVING;
+import static org.openhab.binding.switchbot.internal.SwitchbotBindingConstants.CHANNEL_SLIDE_POSITION;
 
 import org.openhab.binding.switchbot.internal.config.CurtainConfig;
+import org.openhab.binding.switchbot.internal.config.SwitchbotDeviceConfig;
 import org.openhab.core.library.types.DecimalType;
 import org.openhab.core.library.types.OnOffType;
 import org.openhab.core.thing.Thing;
@@ -95,7 +99,7 @@ public class CurtainHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Curtain binding");
 
-        CurtainConfig config = getThing().getConfiguration().as(CurtainConfig.class);
+        CurtainConfig config = getConfigAs(CurtainConfig.class);
 
         logger.debug("Curtain Config: {}", config);
 
@@ -156,5 +160,11 @@ public class CurtainHandler extends SwitchbotHandler {
         } else {
             return config.getDeviceId();
         }
+    }
+
+    @Override
+    protected String getDeviceId() {
+        SwitchbotDeviceConfig config = getConfigAs(CurtainConfig.class);
+        return config.getDeviceId();
     }
 }
