@@ -12,7 +12,6 @@
  */
 package org.openhab.binding.switchbot.internal.handler;
 
-import org.openhab.binding.switchbot.internal.config.MeterConfig;
 import org.openhab.binding.switchbot.internal.config.MotionSensorConfig;
 import org.openhab.binding.switchbot.internal.config.SwitchbotDeviceConfig;
 import org.openhab.core.thing.Thing;
@@ -39,7 +38,7 @@ public class MotionSensorHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Motion Sensor binding");
 
-        MeterConfig config = getThing().getConfiguration().as(MeterConfig.class);
+        MotionSensorConfig config = getConfigAs(MotionSensorConfig.class);
 
         logger.debug("Curtain Config: {}", config);
 

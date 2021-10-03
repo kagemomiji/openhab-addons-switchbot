@@ -38,7 +38,7 @@ public class PlugHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Plug binding");
 
-        PlugConfig config = getThing().getConfiguration().as(PlugConfig.class);
+        PlugConfig config = getConfigAs(PlugConfig.class);
 
         logger.debug("Curtain Config: {}", config);
 

@@ -13,7 +13,6 @@
 package org.openhab.binding.switchbot.internal.handler;
 
 import org.openhab.binding.switchbot.internal.config.ColorBulbConfig;
-import org.openhab.binding.switchbot.internal.config.MeterConfig;
 import org.openhab.binding.switchbot.internal.config.SwitchbotDeviceConfig;
 import org.openhab.core.thing.Thing;
 import org.openhab.core.thing.ThingStatus;
@@ -39,7 +38,7 @@ public class ColorBulbHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Color Bulb binding");
 
-        MeterConfig config = getThing().getConfiguration().as(MeterConfig.class);
+        ColorBulbConfig config = getConfigAs(ColorBulbConfig.class);
 
         logger.debug("Color Bulb Config: {}", config);
 

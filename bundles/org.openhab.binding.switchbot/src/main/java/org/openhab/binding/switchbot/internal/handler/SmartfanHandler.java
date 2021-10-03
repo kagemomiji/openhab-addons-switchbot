@@ -38,7 +38,7 @@ public class SmartfanHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Smartfan binding");
 
-        SmartfanConfig config = getThing().getConfiguration().as(SmartfanConfig.class);
+        SmartfanConfig config = getConfigAs(SmartfanConfig.class);
 
         logger.debug("Curtain Config: {}", config);
 

@@ -38,7 +38,7 @@ public class HumidifierHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Humidifier binding");
 
-        HumidifierConfig config = getThing().getConfiguration().as(HumidifierConfig.class);
+        HumidifierConfig config = getConfigAs(HumidifierConfig.class);
 
         logger.debug("Humidifier Config: {}", config);
 

@@ -37,7 +37,7 @@ public class ContactSensorHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Contact Sensor binding");
 
-        ContactSensorConfig config = getThing().getConfiguration().as(ContactSensorConfig.class);
+        ContactSensorConfig config = getConfigAs(ContactSensorConfig.class);
 
         logger.debug("Curtain Config: {}", config);
 
@@ -60,7 +60,7 @@ public class ContactSensorHandler extends SwitchbotHandler {
 
     @Override
     protected String getDeviceId() {
-        ContactSensorConfig config = getThing().getConfiguration().as(ContactSensorConfig.class);
+        ContactSensorConfig config = getConfigAs(ContactSensorConfig.class);
         return config.getDeviceId();
     }
 }

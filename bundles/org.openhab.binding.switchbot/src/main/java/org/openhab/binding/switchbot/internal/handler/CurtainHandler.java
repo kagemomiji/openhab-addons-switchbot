@@ -99,7 +99,7 @@ public class CurtainHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Curtain binding");
 
-        CurtainConfig config = getThing().getConfiguration().as(CurtainConfig.class);
+        CurtainConfig config = getConfigAs(CurtainConfig.class);
 
         logger.debug("Curtain Config: {}", config);
 
@@ -164,7 +164,7 @@ public class CurtainHandler extends SwitchbotHandler {
 
     @Override
     protected String getDeviceId() {
-        SwitchbotDeviceConfig config = getThing().getConfiguration().as(CurtainConfig.class);
+        SwitchbotDeviceConfig config = getConfigAs(CurtainConfig.class);
         return config.getDeviceId();
     }
 }

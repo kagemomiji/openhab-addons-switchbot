@@ -42,7 +42,7 @@ public class BotHandler extends SwitchbotHandler {
         updateStatus(ThingStatus.UNKNOWN);
         logger.debug("Will boot up Switchbot Bot binding");
 
-        BotConfig config = getThing().getConfiguration().as(BotConfig.class);
+        BotConfig config = getConfigAs(BotConfig.class);
 
         logger.debug("Bot Config: {}", config);
 
